@@ -1,0 +1,26 @@
+{
+  "name": "nightfall-safari",
+  "version": "1.0.1",
+  "description": "Local-first smart dark mode for Safari",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "test": "node --test tests/*.test.cjs && playwright test",
+    "test:browser": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "darkreader": "4.9.133"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "5.3.0",
+    "@fontsource/space-grotesk": "5.3.0",
+    "@playwright/test": "1.63.0"
+  },
+  "private": true
+}

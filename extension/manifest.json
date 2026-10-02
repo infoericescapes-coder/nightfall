@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Nightfall \u2014 Smart Dark Mode",
+  "version": "1.0.1",
+  "description": "Darken bright page surfaces, sidebars and controls. Keep photos natural. Remember your preference for each website.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_title": "Nightfall",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "icons": {
+    "48": "icons/48.png",
+    "128": "icons/128.png",
+    "256": "icons/256.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "vendor/darkreader.js",
+        "settings.js",
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  }
+}

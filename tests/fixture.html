@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Synthetic mail test fixture</title>
+<!-- Explicit third-party light UI exception: synthetic data only, not an Eric Escapes product page. -->
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#202124;font:15px/1.6 system-ui,sans-serif}.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}aside{background:#f1f3f4;padding:24px}header{background:#fff;border-bottom:1px solid #dadce0;padding:20px}main{padding:24px;background:#f6f8fc}.card{padding:20px;margin:16px 0;background:#fff;border:1px solid #ddd}.media{display:flex;gap:16px}img,video,canvas,.background-picture{width:120px;height:80px;object-fit:contain}button,input{background:white;color:#222;border:1px solid #aaa;padding:8px}.highkey{width:600px;height:600px;max-width:100%;background-size:100% 100%;background-repeat:no-repeat}.mixed-background{width:600px;height:160px;max-width:100%;background-size:100% 100%;background-repeat:no-repeat}.gradient{background:linear-gradient(90deg,#fff,#ddd);padding:20px}
+</style>
+</head>
+<body><div class="layout"><aside id="sidebar"><h2>Demo mailbox</h2><p>Inbox · 3 samples</p><p>Sent</p><p>Drafts</p><p>No real mail or private data.</p></aside><div><header id="toolbar"><label>Search demo messages <input placeholder="Search samples"></label> <button>Compose</button></header><main id="main"><h1>Synthetic inbox</h1><article id="card" class="card" style="background-color:#fff;color:#333"><h2>Sample message</h2><p>A deliberately pale card tests inline colours and readable text.</p></article><div id="gradient" class="gradient">Gradient surface</div><div class="card media"><img id="photo" alt="Synthetic red, green and blue swatches"><video id="video" aria-label="Synthetic video poster" controls></video><canvas id="canvas" width="120" height="80" aria-label="Synthetic canvas swatches"></canvas><div id="background-picture" class="background-picture" role="img" aria-label="Synthetic raster background swatches"></div></div><div id="shadow-host"></div><div id="dynamic-root"></div><h2>Synthetic pale raster background</h2><div id="highkey" class="highkey" role="img" aria-label="Pale synthetic raster with small brown square"></div><h2>Mixed gradient and raster background</h2><div id="mixed-background" class="mixed-background" role="img" aria-label="Pale synthetic raster under a gradient"></div></main></div></div>
+<script>
+const ctx=document.querySelector('#canvas').getContext('2d');['#f33','#3c6','#36f'].forEach((color,i)=>{ctx.fillStyle=color;ctx.fillRect(i*40,0,40,80)});
+const swatches=document.querySelector('#canvas').toDataURL('image/png');
+document.querySelector('#photo').src=swatches;document.querySelector('#video').poster=swatches;document.querySelector('#background-picture').style.backgroundImage=`url("${swatches}")`;
+const highkeyCanvas=document.createElement('canvas');highkeyCanvas.width=600;highkeyCanvas.height=600;const highkeyContext=highkeyCanvas.getContext('2d');highkeyContext.fillStyle='#f8f5eb';highkeyContext.fillRect(0,0,600,600);highkeyContext.fillStyle='#734b31';highkeyContext.fillRect(290,290,20,20);
+const highkeyURL=highkeyCanvas.toDataURL('image/png');window.fixtureMedia={highkeyURL};document.querySelector('#highkey').style.backgroundImage=`url("${highkeyURL}")`;document.querySelector('#mixed-background').style.backgroundImage=`linear-gradient(90deg,rgba(255,255,255,.5),rgba(221,221,221,.5)),url("${highkeyURL}")`;
+const shadow=document.querySelector('#shadow-host').attachShadow({mode:'open'});shadow.innerHTML='<style>.shadow-card{background:#fff;color:#222;padding:20px;border:1px solid #ddd}</style><div class="shadow-card">Open shadow DOM surface</div>';
+window.addSyntheticSurface=()=>{const div=document.createElement('div');div.id='dynamic';div.className='card';div.style.cssText='background:#fff;color:#333';div.textContent='Dynamically inserted sample';document.querySelector('#dynamic-root').append(div)};
+</script></body></html>

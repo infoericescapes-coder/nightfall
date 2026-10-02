@@ -1,0 +1,21 @@
+Nightfall adaptation to Dark Reader 4.9.133 (MIT).
+
+The upstream ignoreImageAnalysis selector exclusion returns the entire original
+background-image declaration, skipping both URL images and CSS gradients. With
+image analysis enabled, upstream may hide large light photographic backgrounds.
+
+scripts/build.cjs applies four checked replacements at build time:
+1. Keep the exclusion flag but continue parsing gradients, including inline
+   declarations without a stylesheet selector.
+2. In the URL modifier, return the original absolute URL when excluded, without
+   analysing, recolouring or hiding it. Empty URL values stay empty.
+3. Let inline gradient-plus-URL declarations reach the modifier rather than
+   skipping the whole declaration as the upstream inline handler does.
+4. Resolve inline relative URLs against document.baseURI rather than the origin.
+
+Nightfall uses ignoreImageAnalysis: ['*']. Thus URL image data stays original,
+while gradient stops and ordinary surface/text colours are converted normally.
+
+The npm dependency is unmodified. The build fails if the version or any exact
+source anchor changes, requiring a deliberate patch review for upgrades. The
+upstream copyright and licence remain in darkreader.js and DARKREADER-LICENSE.

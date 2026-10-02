@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Nightfall</title>
+  <link rel="stylesheet" href="popup.css">
+  <script src="settings.js" defer></script>
+  <script src="popup.js" defer></script>
+</head>
+<body>
+  <header><span class="eyebrow">ERIC ESCAPES / UTILITIES</span><h1>Nightfall</h1><p>A quieter corner of the web.</p></header>
+  <main>
+    <fieldset id="controls" disabled>
+      <label class="toggle-row"><span><strong>Dark mode</strong><small>Switch Nightfall on or off everywhere.</small></span><input id="enabled" type="checkbox" role="switch"></label>
+      <section aria-labelledby="site-label"><span id="site-label" class="eyebrow">THIS WEBSITE</span><p id="hostname">Checking this tab…</p><label class="sr-only" for="site">Dark mode for this website</label><select id="site"><option value="default">Use default</option><option value="on">Always dark</option><option value="off">Leave original</option></select><p class="hint">Remembered for this hostname.</p></section>
+      <label class="select-row" for="mode"><span>Default behaviour</span><select id="mode"><option value="dark">Always dark</option><option value="system">Follow system</option></select></label>
+      <label class="toggle-row"><span><strong>Deeper blacks</strong><small>Reduce the glow of pale surfaces.</small></span><input id="deeper" type="checkbox" role="switch"></label>
+    </fieldset>
+    <p id="status" role="status" aria-live="polite">Connecting to Nightfall…</p>
+    <button id="refresh" type="button" hidden>Apply again</button>
+  </main>
+  <footer>Photos stay natural. Settings stay on this Mac.<br><span>Powered by Dark Reader · MIT licence</span></footer>
+</body>
+</html>
