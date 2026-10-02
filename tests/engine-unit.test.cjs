@@ -37,10 +37,11 @@ function engineContext(initial, options = {}) {
     const context = settingsContext();
     const calls = [];
     let onStorage, onMessage, onScheme, onRoot;
+    const windowEvents = {}, documentEvents = {};
     let stored = initial;
     const scheme = {matches: false, addEventListener: (_, callback) => {onScheme = callback;}};
     Object.assign(context, {
-        document: {documentElement: options.noRoot ? null : {}},
+        document: {documentElement: options.noRoot ? null : {}, visibilityState: 'visible', addEventListener: (name, callback) => {documentEvents[name] = callback;}},
         MutationObserver: class {
             constructor(callback) {onRoot = callback;}
             observe(target, configuration) {
@@ -68,12 +69,15 @@ function engineContext(initial, options = {}) {
         matchMedia: () => scheme,
         location: {href: 'https://frame.example/', ancestorOrigins: ['https://parent.example', 'https://top.example']},
         fetch: async (...args) => {calls.push(args); return {};},
-        window: {top: options.crossOrigin ? {get location() {throw new Error('cross origin');}} :
+        window: {addEventListener: (name, callback) => {windowEvents[name] = callback;}, top: options.crossOrigin ? {get location() {throw new Error('cross origin');}} :
             {location: {href: 'https://mail.google.com/mail/'}}},
     });
     vm.runInContext(contentSource, context);
     return {
         calls, scheme, context,
+        storeWithoutEvent: value => {stored = value;},
+        resumeFromCache: () => windowEvents.pageshow({persisted: true}),
+        becomeVisible: () => documentEvents.visibilitychange(),
         status: () => onMessage({type: 'nightfall:status'}),
         refresh: () => onMessage({type: 'nightfall:refresh'}),
         update: (value) => {stored = value; onStorage({nightfall: {newValue: value}}, 'local');},
@@ -197,4 +201,19 @@ test('storage changes received before the root are applied once it appears', asy
     h.addRoot();
     assert.equal((await h.status()).enabled, false);
     assert.equal(h.calls.some((call) => call && call.theme), false);
+});
+
+
+test('resumed Safari pages reconcile preferences missed during suspension', async () => {
+    const h = engineContext(undefined);
+    await h.status();
+    h.storeWithoutEvent({enabled: false});
+    await h.resumeFromCache();
+    assert.equal((await h.status()).enabled, false);
+    h.storeWithoutEvent({enabled: true});
+    await h.becomeVisible();
+    assert.equal((await h.status()).enabled, true);
+    const count = h.calls.length;
+    await h.becomeVisible();
+    assert.equal(h.calls.length, count, 'unchanged visibility resumes must not rebuild the engine');
 });

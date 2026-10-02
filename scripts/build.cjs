@@ -44,5 +44,5 @@ for(const script of manifest.content_scripts.flatMap(x=>x.js)) if(!fs.existsSync
 fs.mkdirSync(path.join(root,'dist'),{recursive:true});
 const output=path.join(root,'dist','Nightfall-Safari.zip');
 if(fs.existsSync(output)) fs.unlinkSync(output);
-execFileSync('/usr/bin/zip',['-qr',output,'.'],{cwd:ext});
+execFileSync('/usr/bin/zip',['-qr',output,'.','-x','*.DS_Store','__MACOSX/*'],{cwd:ext});
 console.log(`Packaged ${manifest.name} ${manifest.version}: ${output}`);

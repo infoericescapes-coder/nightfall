@@ -5,16 +5,16 @@ const root = path.resolve(__dirname, '..');
 const shots = '/tmp/nightfall-qa';
 fs.mkdirSync(shots, {recursive: true});
 const defaults = {enabled:true,mode:'dark',deeper:true,sites:{}};
-function mockBrowser({initial,tabURL}) {
+function mockBrowser({initial,tabURL,platform = 'mac',unresponsive = false}) {
     let value=structuredClone(initial); const listeners=[]; const messages=[];
-    window.qa={writes:[],messages,read:()=>structuredClone(value),set:async next=>{
+    window.qa={writes:[],messages,tabMessages:[],unresponsive,read:()=>structuredClone(value),set:async next=>{
       const oldValue=value; value=structuredClone(next);
       for(const fn of listeners)fn({nightfall:{oldValue,newValue:value}},'local');
     },send:async type=>{for(const fn of messages){const result=fn({type});if(result!==undefined)return await result;}},status:async()=>window.qa.send('nightfall:status')};
-    window.browser={storage:{local:{get:async()=>({nightfall:structuredClone(value)}),set:async data=>{window.qa.writes.push(structuredClone(data));await window.qa.set(data.nightfall);}},onChanged:{addListener:fn=>listeners.push(fn)}},runtime:{onMessage:{addListener:fn=>messages.push(fn)}},tabs:{query:async()=>[{id:1,url:tabURL}],sendMessage:async()=>({enabled:window.NightfallSettings.effective(value,tabURL,matchMedia('(prefers-color-scheme: dark)').matches),hostname:new URL(tabURL).hostname})}};
+    window.browser={storage:{local:{get:async()=>({nightfall:structuredClone(value)}),set:async data=>{window.qa.writes.push(structuredClone(data));await window.qa.set(data.nightfall);}},onChanged:{addListener:fn=>listeners.push(fn)}},runtime:{getPlatformInfo:async()=>({os:platform}),onMessage:{addListener:fn=>messages.push(fn)}},tabs:{query:async()=>[{id:1,url:tabURL}],sendMessage:async(_tab,message)=>{window.qa.tabMessages.push({type:message.type,time:performance.now()});if(window.qa.unresponsive)return new Promise(()=>{});return {enabled:window.NightfallSettings.effective(value,tabURL,matchMedia('(prefers-color-scheme: dark)').matches),hostname:new URL(tabURL).hostname};}}};
 }
-async function mockAPI(page, initial = defaults, tabURL = 'https://mail.example.test/inbox') {
-  await page.addInitScript(mockBrowser, {initial,tabURL});
+async function mockAPI(page, initial = defaults, tabURL = 'https://mail.example.test/inbox', options = {}) {
+  await page.addInitScript(mockBrowser, {initial,tabURL,...options});
 }
 async function routes(page, {scriptCSP = false} = {}) {
   await page.route('https://mail.example.test/**', route => route.fulfill({path:path.join(root,'tests/fixture.html'),contentType:'text/html',headers:scriptCSP?{'Content-Security-Policy':"script-src 'self'"}:{}}));
@@ -139,4 +139,43 @@ for(const width of [160,360])test(`popup keeps intrinsic width from ${width}px a
   await page.evaluate(()=>document.body.scrollTop=0);
   expect(await page.evaluate(()=>window.qa.writes.length)).toBe(7);
   await page.screenshot({path:`${shots}/${info.project.name}-popup-${width}.png`,fullPage:true});expect(errors).toEqual([]);
+});
+
+// These exercise the iOS runtime-class layout in desktop browser engines.
+// They do not model the native Safari extension sheet or device safe-area values.
+const longHost=`mail.${'a'.repeat(60)}.${'b'.repeat(60)}.example.test`;
+for(const viewport of [{width:320,height:568},{width:390,height:700},{width:844,height:390},{width:768,height:1024}]) {
+  test(`simulated iOS popup fits ${viewport.width}px, exposes touch controls and saves a toggle`, async ({page},info)=>{
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.setViewportSize(viewport);await mockAPI(page,defaults,`https://${longHost}/inbox`,{platform:'ios'});await routes(page);await page.goto('https://nightfall.example.test/popup.html');
+    await expect(page.locator('html')).toHaveClass('nightfall-ios');await expect(page.locator('#enabled')).toBeEnabled();
+    await expect(page.locator('#hostname')).toHaveText(longHost);
+    const dimensions=await page.evaluate(()=>({viewport:innerWidth,root:document.documentElement.getBoundingClientRect().width,body:document.body.getBoundingClientRect().width,scroll:document.documentElement.scrollWidth,bodyScroll:document.body.scrollWidth,padding:parseFloat(getComputedStyle(document.body).paddingBottom)}));
+    expect(dimensions.root).toBe(viewport.width);expect(dimensions.body).toBe(viewport.width);expect(dimensions.scroll).toBeLessThanOrEqual(viewport.width);expect(dimensions.bodyScroll).toBeLessThanOrEqual(viewport.width);expect(dimensions.padding).toBeGreaterThanOrEqual(18);
+    const controls=await page.locator('#site,#mode,#refresh,.toggle-row').evaluateAll(elements=>elements.map(e=>({height:e.getBoundingClientRect().height,font:parseFloat(getComputedStyle(e).fontSize),select:e.tagName==='SELECT'})));
+    for(const control of controls){expect(control.height).toBeGreaterThanOrEqual(44);if(control.select)expect(control.font).toBe(16);}
+    const hostBox=await page.locator('#hostname').boundingBox();expect(hostBox.x).toBeGreaterThanOrEqual(0);expect(hostBox.x+hostBox.width).toBeLessThanOrEqual(viewport.width);
+    await page.locator('#enabled').uncheck();await expect.poll(()=>page.evaluate(()=>window.qa.read().enabled)).toBe(false);await expect(page.locator('#enabled')).toBeEnabled();await expect(page.locator('#status')).toHaveText('Nightfall is paused everywhere.');
+    await page.locator('footer').scrollIntoViewIfNeeded();await expect(page.locator('footer')).toBeInViewport({ratio:1});
+    const footer=await page.locator('footer').boundingBox();expect(footer.y).toBeGreaterThanOrEqual(0);expect(footer.y+footer.height).toBeLessThanOrEqual(viewport.height);
+    await page.screenshot({path:`${shots}/${info.project.name}-ios-${viewport.width}.png`,fullPage:true});expect(errors).toEqual([]);
+  });
+}
+
+test('simulated iOS popup maintains a 320px intrinsic minimum from an initial 160px viewport',async({page})=>{
+  await page.setViewportSize({width:160,height:568});await mockAPI(page,defaults,'https://mail.example.test/inbox',{platform:'ios'});await routes(page);await page.goto('https://nightfall.example.test/popup.html');await expect(page.locator('html')).toHaveClass('nightfall-ios');
+  for(const selector of ['html','body'])expect(await page.locator(selector).evaluate(e=>e.getBoundingClientRect().width)).toBe(320);
+  await page.setViewportSize({width:320,height:568});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBe(320);await expect(page.locator('#enabled')).toBeEnabled();
+});
+
+test('simulated iOS popup bounds an unresponsive page request and saves preferences within one timeout',async({page})=>{
+  await page.setViewportSize({width:390,height:700});await mockAPI(page,defaults,'https://mail.example.test/inbox',{platform:'ios',unresponsive:true});await routes(page);await page.goto('https://nightfall.example.test/popup.html');
+  await expect(page.locator('#status')).toContainText('Nightfall cannot reach this page yet.',{timeout:4500});await expect(page.locator('#enabled')).toBeEnabled();
+  await page.evaluate(()=>{window.qa.tabMessages=[];window.qa.saveStarted=performance.now()});
+  await page.locator('#enabled').uncheck();await expect.poll(()=>page.evaluate(()=>window.qa.read().enabled)).toBe(false);await expect(page.locator('#enabled')).toBeDisabled();
+  await expect(page.locator('#enabled')).toBeEnabled({timeout:4500});await expect(page.locator('#status')).toHaveText('Preference saved on this device. Reload the website to apply it when Safari is ready.');
+  const result=await page.evaluate(()=>({elapsed:performance.now()-window.qa.saveStarted,writes:window.qa.writes,requests:window.qa.tabMessages}));
+  expect(result.elapsed).toBeGreaterThanOrEqual(2900);expect(result.elapsed).toBeLessThan(4500);expect(result.writes).toHaveLength(1);expect(result.writes[0].nightfall.enabled).toBe(false);expect(result.requests.map(request=>request.type)).toEqual(['nightfall:refresh']);
+  await expect(page.locator('#refresh')).toBeHidden();
 });

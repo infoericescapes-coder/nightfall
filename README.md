@@ -1,6 +1,6 @@
 # Nightfall for Safari
 
-A personal dark-mode extension for Eric. It converts CSS colours across the page, including pale sidebars, toolbars, borders, forms and newly loaded panels. It uses the locally bundled MIT-licensed Dark Reader engine, rather than a whole-page inversion filter.
+A personal dark-mode extension for Eric, with shared resources for macOS, iOS and iPadOS Safari. It converts CSS colours across the page, including pale sidebars, toolbars, borders, forms and newly loaded panels. It uses the locally bundled MIT-licensed Dark Reader engine, rather than a whole-page inversion filter.
 
 ## Try it in Safari
 
@@ -18,6 +18,10 @@ Apple's instructions: [Running your Safari web extension](https://developer.appl
 ## Updating an existing temporary install
 
 Download the updated `dist/Nightfall-Safari.zip`, replacing the ZIP at the location you originally selected. In **Safari → Settings → Extensions → Nightfall**, click **Reload**, then close and reopen the toolbar popup. Version 1.0.1 fixes Safari’s collapsed popup width and provides a bounded, scrollable layout.
+
+## iPhone and iPad
+
+Version 1.1.0 adds mobile layouts and suspended-tab recovery. The same ZIP can be uploaded to Apple’s Safari Web Extension Packager to create an iOS container for TestFlight. It is not directly installable on iPhone or iPad. See [iOS 27 packaging and testing](docs/IOS.md) for the cloud route and the local `npm run package:ios` helper. Native iOS 27 execution remains to be verified with a signed build.
 
 ## Controls
 

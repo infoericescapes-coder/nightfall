@@ -128,4 +128,13 @@
     const onSchemeChange = () => apply();
     if (scheme.addEventListener) scheme.addEventListener('change', onSchemeChange);
     else scheme.addListener(onSchemeChange);
+
+    // Safari may suspend pages without delivering storage events. Reconcile
+    // saved preferences when a page resumes, without rebuilding an unchanged theme.
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) return refresh();
+    });
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') return refresh();
+    });
 })();

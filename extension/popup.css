@@ -1,7 +1,298 @@
-@font-face{font-family:'Space Grotesk';src:url('fonts/space-grotesk-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}
-@font-face{font-family:'IBM Plex Mono';src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');font-weight:400;font-display:swap}
-:root{color-scheme:dark;--ee-canvas:#050605;--ee-panel:#0b0d0b;--ee-text:#f2efe6;--ee-muted:#8b8f86;--ee-accent:#5fb53c;--ee-hairline:rgba(242,239,230,.09);--ee-hairline-strong:rgba(242,239,230,.13);--ee-hairline-rest:rgba(242,239,230,.35)}
-/* Safari measures the root before sizing its native popover. Never cap it to
-   the initial viewport: that creates a shrink-to-fit feedback loop. */
-html{width:360px;min-width:360px;height:600px;overflow:hidden}
-*{box-sizing:border-box}body{margin:0;padding:18px;width:360px;min-width:360px;height:600px;overflow-y:auto;overflow-x:hidden;background:var(--ee-canvas);color:var(--ee-text);font:14px/1.6 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}header{padding-bottom:12px;border-bottom:1px solid var(--ee-hairline-strong)}.eyebrow{font:10px/1.6 'IBM Plex Mono',ui-monospace,monospace;letter-spacing:.15em;color:var(--ee-muted)}h1{font:500 28px/1.2 'Space Grotesk','Helvetica Neue',sans-serif;text-transform:uppercase;letter-spacing:-.04em;margin:6px 0}p{margin:5px 0;color:var(--ee-muted)}fieldset{border:0;padding:0;margin:0;min-width:0}section{padding:12px 0;border-bottom:1px solid var(--ee-hairline)}#hostname{color:var(--ee-text);font-size:16px;overflow-wrap:anywhere;margin:4px 0 8px}.toggle-row,.select-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--ee-hairline)}strong{font-weight:500}small{display:block;font-size:12px;color:var(--ee-muted);margin-top:3px}input[type=checkbox]{appearance:none;flex:0 0 auto;width:40px;height:24px;border:1px solid var(--ee-hairline-rest);background:var(--ee-panel);border-radius:12px;position:relative;margin:0;cursor:pointer}input[type=checkbox]:after{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;border-radius:50%;background:var(--ee-muted)}input[type=checkbox]:checked{border-color:var(--ee-accent)}input[type=checkbox]:checked:after{left:19px;background:var(--ee-accent)}select,button{font:inherit;color:var(--ee-text);background:var(--ee-panel);border:1px solid var(--ee-hairline-rest);padding:9px 10px;border-radius:0}section select{width:100%}.select-row{display:flex}.select-row select{width:164px;flex:0 0 164px;min-width:0}.hint{font-size:11px;margin-top:7px}#status{font-size:12px;line-height:1.6;min-height:38px;margin:12px 0 8px}button{width:100%;cursor:pointer}footer{font-size:11px;line-height:1.8;color:var(--ee-muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--ee-hairline)}footer span{font-size:10px} :focus-visible{outline:2px solid var(--ee-text);outline-offset:4px} :disabled{opacity:.55;cursor:default}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('fonts/space-grotesk-latin-500-normal.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  src: url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --ee-canvas: #050605;
+  --ee-panel: #0b0d0b;
+  --ee-text: #f2efe6;
+  --ee-muted: #8b8f86;
+  --ee-accent: #5fb53c;
+  --ee-hairline: rgba(242, 239, 230, .09);
+  --ee-hairline-strong: rgba(242, 239, 230, .13);
+  --ee-hairline-rest: rgba(242, 239, 230, .35);
+}
+
+/* Safari measures the root before sizing its native desktop popover. Never cap
+   it to the initial viewport: that creates a shrink-to-fit feedback loop. */
+html {
+  width: var(--popup-width, 360px);
+  min-width: var(--popup-min-width, 360px);
+  height: var(--popup-height, 600px);
+  min-height: var(--popup-min-height, 0);
+  overflow-x: hidden;
+  overflow-y: var(--popup-root-overflow, hidden);
+  background: var(--ee-canvas);
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: max(18px, env(safe-area-inset-top, 0px))
+           max(18px, env(safe-area-inset-right, 0px))
+           max(18px, env(safe-area-inset-bottom, 0px))
+           max(18px, env(safe-area-inset-left, 0px));
+  width: var(--popup-width, 360px);
+  min-width: var(--popup-min-width, 360px);
+  height: var(--popup-height, 600px);
+  min-height: var(--popup-min-height, 0);
+  overflow-y: var(--popup-body-overflow, auto);
+  overflow-x: var(--popup-body-overflow-x, hidden);
+  background: var(--ee-canvas);
+  color: var(--ee-text);
+  font: 14px/1.6 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+header {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--ee-hairline-strong);
+}
+
+.eyebrow {
+  font: 10px/1.6 'IBM Plex Mono', ui-monospace, monospace;
+  letter-spacing: .15em;
+  color: var(--ee-muted);
+}
+
+h1 {
+  font: 500 28px/1.2 'Space Grotesk', 'Helvetica Neue', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: -.04em;
+  margin: 6px 0;
+}
+
+p {
+  margin: 5px 0;
+  color: var(--ee-muted);
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+section {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ee-hairline);
+}
+
+#hostname {
+  color: var(--ee-text);
+  font-size: 16px;
+  overflow-wrap: anywhere;
+  margin: 4px 0 8px;
+}
+
+.toggle-row,
+.select-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--ee-hairline);
+}
+
+strong {
+  font-weight: 500;
+}
+
+small {
+  display: block;
+  font-size: 12px;
+  color: var(--ee-muted);
+  margin-top: 3px;
+}
+
+input[type=checkbox] {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 24px;
+  border: 1px solid var(--ee-hairline-rest);
+  background: var(--ee-panel);
+  border-radius: 12px;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+
+input[type=checkbox]::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 3px;
+  top: 3px;
+  border-radius: 50%;
+  background: var(--ee-muted);
+}
+
+input[type=checkbox]:checked {
+  border-color: var(--ee-accent);
+}
+
+input[type=checkbox]:checked::after {
+  left: 19px;
+  background: var(--ee-accent);
+}
+
+select,
+button {
+  font: inherit;
+  font-size: var(--popup-control-font, inherit);
+  min-height: var(--popup-control-min-height, 0);
+  color: var(--ee-text);
+  background: var(--ee-panel);
+  border: 1px solid var(--ee-hairline-rest);
+  padding: 9px 10px;
+  border-radius: 0;
+}
+
+section select {
+  width: 100%;
+}
+
+.select-row select {
+  width: var(--popup-mode-width, 164px);
+  flex: var(--popup-mode-flex, 0 0 164px);
+  min-width: 0;
+}
+
+.hint {
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+#status {
+  font-size: 12px;
+  line-height: 1.6;
+  min-height: 38px;
+  margin: 12px 0 8px;
+}
+
+button {
+  width: 100%;
+  cursor: pointer;
+}
+
+footer {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--ee-muted);
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--ee-hairline);
+}
+
+footer span {
+  font-size: 10px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ee-text);
+  outline-offset: 4px;
+}
+
+:disabled {
+  opacity: .55;
+  cursor: default;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shared rules read the iOS properties below. The containing label provides
+   a full-width touch target, including the switch and its explanatory copy. */
+.toggle-row {
+  min-height: 44px;
+  padding: var(--popup-toggle-padding, 12px) 0;
+}
+
+.toggle-row > span {
+  min-width: 0;
+}
+
+.select-row {
+  flex-direction: var(--popup-row-direction, row);
+  align-items: var(--popup-row-alignment, center);
+  gap: var(--popup-row-gap, 16px);
+}
+
+input {
+  font-size: var(--popup-control-font, inherit);
+}
+
+select {
+  height: var(--popup-select-height, auto);
+}
+
+/* Safari's platform API adds this class on iOS, including an iPad using a
+   trackpad. A stable minimum prevents intrinsic popovers collapsing at startup. */
+html.nightfall-ios {
+  --popup-width: 100%;
+  --popup-min-width: 320px;
+  --popup-height: auto;
+  --popup-min-height: 100%;
+  --popup-root-overflow: auto;
+  --popup-body-overflow: visible;
+  --popup-body-overflow-x: visible;
+  --popup-toggle-padding: 14px;
+  --popup-row-direction: column;
+  --popup-row-alignment: stretch;
+  --popup-row-gap: 8px;
+  --popup-mode-width: 100%;
+  --popup-mode-flex: auto;
+  --popup-control-font: 16px;
+  --popup-control-min-height: 44px;
+  --popup-select-height: 44px;
+}
+
+/* iOS WebKit fallback while the asynchronous platform query is pending.
+   Pointer precision and viewport width do not reliably identify the OS. */
+@supports (-webkit-touch-callout: none) {
+  html {
+    --popup-width: 100%;
+    --popup-min-width: 320px;
+    --popup-height: auto;
+    --popup-min-height: 100%;
+    --popup-root-overflow: auto;
+    --popup-body-overflow: visible;
+    --popup-body-overflow-x: visible;
+    --popup-toggle-padding: 14px;
+    --popup-row-direction: column;
+    --popup-row-alignment: stretch;
+    --popup-row-gap: 8px;
+    --popup-mode-width: 100%;
+    --popup-mode-flex: auto;
+    --popup-control-font: 16px;
+    --popup-control-min-height: 44px;
+    --popup-select-height: 44px;
+  }
+}

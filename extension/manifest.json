@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Nightfall \u2014 Smart Dark Mode",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Darken bright page surfaces, sidebars and controls. Keep photos natural. Remember your preference for each website.",
   "permissions": [
     "storage",
@@ -22,7 +22,8 @@
   "icons": {
     "48": "icons/48.png",
     "128": "icons/128.png",
-    "256": "icons/256.png"
+    "256": "icons/256.png",
+    "512": "icons/512.png"
   },
   "content_scripts": [
     {
