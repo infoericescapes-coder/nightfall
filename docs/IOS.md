@@ -54,6 +54,33 @@ Open the generated project in Xcode. Select your signing team for the app and ex
 
 Because the script copies resources, later JavaScript/CSS changes must also be copied into the generated extension resources or packaged into a fresh project before rebuilding.
 
+### CLI archive and TestFlight upload
+
+A signed-in Xcode account is separate from Safari's App Store Connect login. The native test session confirmed that `xcodebuild` can use the account for automatic provisioning. Local keychain authorization may still require the account holder to approve a macOS prompt; never put its password in a script or repository.
+
+For a generated project, build an archive with an intentional native version and a new build number. Replace the example team and paths with your own values; preserve an existing archive by choosing a fresh path:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer \
+  xcodebuild -project native-ios/verified/Nightfall/Nightfall.xcodeproj \
+  -scheme Nightfall -configuration Release -destination 'generic/platform=iOS' \
+  -archivePath native-ios/Nightfall-next.xcarchive \
+  -derivedDataPath native-ios/DerivedData-distribution-next \
+  DEVELOPMENT_TEAM=YOUR_TEAM_ID MARKETING_VERSION=1.1.0 \
+  CURRENT_PROJECT_VERSION=YOUR_NEW_BUILD_NUMBER archive
+```
+
+Keep an ignored export-options plist with `method=app-store-connect`, `signingStyle=automatic`, `teamID=YOUR_TEAM_ID`, `manageAppVersionAndBuildNumber=false`, and `destination=export` for a local IPA or `destination=upload` to upload through Xcode's account session. Use it with:
+
+```sh
+DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer \
+  xcodebuild -exportArchive -archivePath native-ios/Nightfall-next.xcarchive \
+  -exportPath native-ios/export-next \
+  -exportOptionsPlist native-ios/ExportOptions.plist -allowProvisioningUpdates
+```
+
+The provisioning flag permits Xcode to request/update signing assets through the selected developer account. It cannot resolve a locked or unapproved private key by itself. Archive success, export success, upload acceptance, Apple processing and TestFlight availability are separate results; verify each one. TestFlight tester management through Apple's public API needs its own authenticated API setup; Xcode sign-in does not provide an API key for other tools.
+
 Source: [Apple's local packaging guide](https://developer.apple.com/documentation/safariservices/packaging-a-web-extension-for-safari).
 
 ## Native acceptance checks before claiming iOS 27 support
