@@ -1,0 +1,64 @@
+{
+  "capturedAt": "2026-10-03T10:34:20.990455+10:00",
+  "result": "EXPORT SUCCEEDED",
+  "exitCode": 0,
+  "uploadPerformed": false,
+  "version": "1.1.0",
+  "build": "2",
+  "scriptSha256": "7aa152b4565b04570c4f3251854595f4e9780ba3e46e71a4f19d8f9d3159a24b",
+  "referenceCommit": "c94b784b04d0e368047935a70dc795ca65eade4f",
+  "referenceScriptSha256": "6cd40b30c5afc1c784c248d4490eeb5ca0fff1258d597fa61193da0e75e1dafc",
+  "ipa": {
+    "path": "native-ios/export-disposable-20261003-103250/Nightfall.ipa",
+    "sha256": "4e704e5710117620507f1090ea7838ef3352c5b8f29508ced4724c90218005b3",
+    "bytes": 232129
+  },
+  "keychainSearchList": {
+    "before": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+    "after": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+    "byteIdentical": true
+  },
+  "temporaryResidue": {
+    "nightfall-release-kc.*": [],
+    "nightfall-rsync-shim.*": [],
+    "nightfall-keychain-search-list.lock": []
+  },
+  "mockSafetyScenariosPassed": 24,
+  "signatureEvidence": [
+    {
+      "bundle": "native-ios/export-disposable-20261003-103250/signature-verification/Payload/Nightfall.app",
+      "displayExit": 0,
+      "signature": "Executable=/Users/eric/Documents/nightfall/native-ios/export-disposable-20261003-103250/signature-verification/Payload/Nightfall.app/Nightfall\nIdentifier=com.ericescapes.nightfall\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=541 flags=0x0(none) hashes=6+7 location=embedded\nSignature size=4786\nAuthority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Oct 2026 at 10:33:06\u202fam\nInfo.plist entries=32\nTeamIdentifier=B3Z8GRN254\nSealed Resources version=2 rules=10 files=37\nInternal requirements count=1 size=192\nTotal signatures=1\nChosen signature=1\n",
+      "strictVerifyExit": 0
+    },
+    {
+      "bundle": "native-ios/export-disposable-20261003-103250/signature-verification/Payload/Nightfall.app/PlugIns/Nightfall Extension.appex",
+      "displayExit": 0,
+      "signature": "Executable=/Users/eric/Documents/nightfall/native-ios/export-disposable-20261003-103250/signature-verification/Payload/Nightfall.app/PlugIns/Nightfall Extension.appex/Nightfall Extension\nIdentifier=com.ericescapes.nightfall.Extension\nFormat=bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=935 flags=0x0(none) hashes=18+7 location=embedded\nSignature size=4786\nAuthority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Oct 2026 at 10:33:06\u202fam\nInfo.plist entries=23\nTeamIdentifier=B3Z8GRN254\nSealed Resources version=2 rules=10 files=21\nInternal requirements count=1 size=200\nTotal signatures=1\nChosen signature=1\n",
+      "strictVerifyExit": 0
+    }
+  ],
+  "resourceFileCount": 20,
+  "resourceByteMatches": {
+    "popup.js": true,
+    "LICENSE": true,
+    "popup.html": true,
+    "manifest.json": true,
+    "popup.css": true,
+    "content.js": true,
+    "settings.js": true,
+    "icons/48.png": true,
+    "icons/128.png": true,
+    "icons/512.png": true,
+    "icons/16.png": true,
+    "icons/256.png": true,
+    "icons/32.png": true,
+    "fonts/space-grotesk-LICENSE": true,
+    "fonts/space-grotesk-latin-500-normal.woff2": true,
+    "fonts/ibm-plex-mono-latin-400-normal.woff2": true,
+    "fonts/ibm-plex-mono-LICENSE": true,
+    "vendor/NIGHTFALL-PATCH.txt": true,
+    "vendor/darkreader.js": true,
+    "vendor/DARKREADER-LICENSE": true
+  }
+}

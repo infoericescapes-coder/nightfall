@@ -107,3 +107,43 @@ As a local fallback, an Xcode 27 Release archive succeeded using command-line `M
 - Real-world complex sites (including Gmail), strict-CSP behaviour and varied images/video/canvas. Existing documented engine limitations remain.
 - Simulator/native Safari title contrast in light appearance and the transient duplicate-style observation above.
 - Apple cloud export failure or the local signing-key/export blocker must be resolved before TestFlight invitation/installation; Apple processing and external beta review may then apply.
+
+
+## Signing correction and successful export — 3 October 2026, 10:33 AEST
+
+This addendum supersedes the local export/keychain blocker and password-prompt advice in the earlier Distribution status checkpoint. Eric cancelled the previous prompt and identified the retired `foundation-release-13sep.keychain-db` as its source. Its password is neither available nor required. The corrected run followed `/Users/eric/Claude/Projects/Base Team/Documentation/apple-signing-for-codex.md`; it did not read, unlock, copy, rename, remove or otherwise modify any `foundation-release*` keychain.
+
+Added `scripts/release-ios.sh`, porting Simple Social's `build_release_keychain`, teardown/cleanup, search-list lock family and rsync cleanup from commit `c94b784b04d0e368047935a70dc795ca65eade4f`. Nightfall prefixes replace the original lock/temp names. The wrapper pins the existing **1.1.0 (2)** archive and export-only plist, validates the distribution identity SHA-1 `7F10906FE961004F5693CDCD7D84C225F6B4017B`, and supplies the documented API authentication flags with `-allowProvisioningUpdates`. The Apple rsync shim affects only export's PATH. The only executable changes inside the copied helpers add cleanup audit/status checks and correctly convert the DER WWDR certificate to PEM for both PKCS12 branches.
+
+Before live signing, independent review and the primary rerun passed **24 isolated mock scenarios** on `/bin/bash` 3.2.57: failed/empty list reads, partition failure, export error propagation, cleanup preserving another process's entry, owned/foreign lock handling, completion guards, complete-chain fallback, and physical/symlinked repository temporary-directory rejection. Review caught and repaired the inherited-TMPDIR gap before signing. Explicit `set +x` now disables inherited tracing before secrets are handled. The actual export was then run with full filesystem access and Eric present; no other signing process was active.
+
+**Result: EXPORT SUCCEEDED, exit 0.** The local IPA is `native-ios/export-disposable-20261003-103250/Nightfall.ipa` (232,129 bytes), SHA-256 `4e704e5710117620507f1090ea7838ef3352c5b8f29508ced4724c90218005b3`. No upload or tester invitation was performed in this export-only step. No keychain prompt was observed.
+
+`codesign -dvv` on the actual exported IPA payload showed:
+
+```text
+Nightfall.app
+Identifier=com.ericescapes.nightfall
+Authority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)
+TeamIdentifier=B3Z8GRN254
+
+Nightfall Extension.appex
+Identifier=com.ericescapes.nightfall.Extension
+Authority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)
+TeamIdentifier=B3Z8GRN254
+```
+
+Both also passed `codesign --verify --strict`. All **20** exported shared resource files match the tested source byte-for-byte. The app and extension retain native version **1.1.0 (2)**.
+
+Actual `security list-keychains -d user` evidence before and after:
+
+```text
+BEFORE
+    "/Users/eric/Library/Keychains/login.keychain-db"
+AFTER
+    "/Users/eric/Library/Keychains/login.keychain-db"
+```
+
+`cmp` returned **0**: the lists are byte-identical. No Nightfall disposable keychain directory, rsync shim or search-list lock remained after exit. Cleanup reread the current list and removed only its own keychain; the before list was used only for audit. [Full portable export evidence](ios-evidence/distribution-export.json) records signature output, resource comparison and artifact hashes. Private keys, profiles, the disposable keychain, archive, IPA and local signing logs remain outside Git.
+
+The remaining native acceptance checks above still apply. Distribution export is now verified locally; Apple cloud packaging failure remains historical/unresolved, and TestFlight upload, processing/review and invitation are separate future actions.

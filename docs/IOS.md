@@ -54,32 +54,21 @@ Open the generated project in Xcode. Select your signing team for the app and ex
 
 Because the script copies resources, later JavaScript/CSS changes must also be copied into the generated extension resources or packaged into a fresh project before rebuilding.
 
-### CLI archive and TestFlight upload
+### Local distribution signing and export
 
-A signed-in Xcode account is separate from Safari's App Store Connect login. The native test session confirmed that `xcodebuild` can use the account for automatic provisioning. Local keychain authorization may still require the account holder to approve a macOS prompt; never put its password in a script or repository.
+On Eric's Mac, read `/Users/eric/Claude/Projects/Base Team/Documentation/apple-signing-for-codex.md` before any Release archive, distribution signature, export or upload. Use a disposable per-run keychain populated from the existing distribution assets. Fixed-path `foundation-release*` keychains must remain untouched. If a keychain prompt appears, cancel it and stop; its password is not needed.
 
-For a generated project, build an archive with an intentional native version and a new build number. Replace the example team and paths with your own values; preserve an existing archive by choosing a fresh path:
-
-```sh
-DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer \
-  xcodebuild -project native-ios/verified/Nightfall/Nightfall.xcodeproj \
-  -scheme Nightfall -configuration Release -destination 'generic/platform=iOS' \
-  -archivePath native-ios/Nightfall-next.xcarchive \
-  -derivedDataPath native-ios/DerivedData-distribution-next \
-  DEVELOPMENT_TEAM=YOUR_TEAM_ID MARKETING_VERSION=1.1.0 \
-  CURRENT_PROJECT_VERSION=YOUR_NEW_BUILD_NUMBER archive
-```
-
-Keep an ignored export-options plist with `method=app-store-connect`, `signingStyle=automatic`, `teamID=YOUR_TEAM_ID`, `manageAppVersionAndBuildNumber=false`, and `destination=export` for a local IPA or `destination=upload` to upload through Xcode's account session. Use it with:
+The Nightfall export helper ports Simple Social's hardened keychain/lock/cleanup functions. It uses Xcode 27, the existing ignored `native-ios/Nightfall.xcarchive` and `native-ios/ExportOptions.plist`, API authentication for provisioning, and Apple's `/usr/bin/rsync` through a temporary shim scoped to export. It refuses an upload destination and an existing output directory:
 
 ```sh
-DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer \
-  xcodebuild -exportArchive -archivePath native-ios/Nightfall-next.xcarchive \
-  -exportPath native-ios/export-next \
-  -exportOptionsPlist native-ios/ExportOptions.plist -allowProvisioningUpdates
+scripts/release-ios.sh
+# Or choose a fresh export directory inside ignored native-ios/:
+scripts/release-ios.sh ./native-ios/export-next
 ```
 
-The provisioning flag permits Xcode to request/update signing assets through the selected developer account. It cannot resolve a locked or unapproved private key by itself. Archive success, export success, upload acceptance, Apple processing and TestFlight availability are separate results; verify each one. TestFlight tester management through Apple's public API needs its own authenticated API setup; Xcode sign-in does not provide an API key for other tools.
+The helper checks the archive's expected **1.1.0 (2)** app/extension metadata and the configured distribution identity, exports an IPA, verifies both exported signatures, and prints the user keychain search list before and after. Cleanup subtracts only the disposable keychain from the current list and removes the temporary keychain/shim; the earlier list is used only for comparison, never restored as a snapshot. Signing assets, generated passwords and PKCS12 material stay outside the repository. Archive, IPA and local signing logs stay ignored.
+
+This helper exports an existing archive only. A future version/build or archive path needs an intentional helper update and the same signing procedure. Upload and TestFlight invitations require their own authorised step. See the [native test report](IOS-TEST-RESULTS.md) for the actual export result; an archive or IPA alone does not establish TestFlight availability.
 
 Source: [Apple's local packaging guide](https://developer.apple.com/documentation/safariservices/packaging-a-web-extension-for-safari).
 
