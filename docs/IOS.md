@@ -48,17 +48,19 @@ To use an already registered bundle identifier:
 NIGHTFALL_BUNDLE_ID=com.example.nightfall npm run package:ios
 ```
 
-On the tested Mac mini, select Xcode 27 for each command with `DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer`; the machine-wide default remains Xcode 26.6. The local generated wrapper reports version 1.0 (1), while its copied extension manifest is 1.1.0. Set intentional wrapper versions before local distribution; Apple’s cloud packager reads the uploaded manifest and queued 1.1.0 (1).
+On the tested Mac mini, select Xcode 27 for each command with `DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer`; the machine-wide default remains Xcode 26.6. The local generated wrapper reports version 1.0 (1), while its copied extension manifest is 1.1.0. Set intentional wrapper versions before local distribution; the verified local distribution archive is 1.1.0 (3). Apple’s earlier cloud packager run used 1.1.0 (1).
 
 Open the generated project in Xcode. Select your signing team for the app and extension targets, confirm the generated bundle identifiers and AppIcon assets, select a connected iPhone/iPad or simulator, then build and run. Test the extension in Safari as well as the containing app's welcome screen.
 
 Because the script copies resources, later JavaScript/CSS changes must also be copied into the generated extension resources or packaged into a fresh project before rebuilding.
 
+Safari distribution requires a manifest description of at most 112 characters. The build now checks this before packaging; version 1.1.0 uses a 110-character description after Apple rejected the earlier 115-character value.
+
 ### Local distribution signing and export
 
 On Eric's Mac, read `/Users/eric/Claude/Projects/Base Team/Documentation/apple-signing-for-codex.md` before any Release archive, distribution signature, export or upload. Use a disposable per-run keychain populated from the existing distribution assets. Fixed-path `foundation-release*` keychains must remain untouched. If a keychain prompt appears, cancel it and stop; its password is not needed.
 
-The Nightfall export helper ports Simple Social's hardened keychain/lock/cleanup functions. It uses Xcode 27, the existing ignored `native-ios/Nightfall.xcarchive` and `native-ios/ExportOptions.plist`, API authentication for provisioning, and Apple's `/usr/bin/rsync` through a temporary shim scoped to export. It refuses an upload destination and an existing output directory:
+The Nightfall export helper ports Simple Social's hardened keychain/lock/cleanup functions. It uses Xcode 27, the existing ignored `native-ios/Nightfall-build3.xcarchive` and `native-ios/ExportOptions.plist`, API authentication for provisioning, and Apple's `/usr/bin/rsync` through a temporary shim scoped to export. It refuses an upload destination and an existing output directory:
 
 ```sh
 scripts/release-ios.sh
@@ -66,7 +68,9 @@ scripts/release-ios.sh
 scripts/release-ios.sh ./native-ios/export-next
 ```
 
-The helper checks the archive's expected **1.1.0 (2)** app/extension metadata and the configured distribution identity, exports an IPA, verifies both exported signatures, and prints the user keychain search list before and after. Cleanup subtracts only the disposable keychain from the current list and removes the temporary keychain/shim; the earlier list is used only for comparison, never restored as a snapshot. Signing assets, generated passwords and PKCS12 material stay outside the repository. Archive, IPA and local signing logs stay ignored.
+The helper checks the archive's expected **1.1.0 (3)** app/extension metadata and the configured distribution identity, exports an IPA, verifies both exported signatures, and prints the user keychain search list before and after. Cleanup subtracts only the disposable keychain from the current list and removes the temporary keychain/shim; the earlier list is used only for comparison, never restored as a snapshot. Signing assets, generated passwords and PKCS12 material stay outside the repository. Archive, IPA and local signing logs stay ignored.
+
+The corrected local **1.1.0 (3)** IPA was uploaded on 3 October 2026 and processed successfully. API readback confirms it is ready for internal beta testing after the export-compliance answer. External beta submission and tester invitations remain separate; see the [upload evidence](ios-evidence/testflight-upload.json).
 
 This helper exports an existing archive only. A future version/build or archive path needs an intentional helper update and the same signing procedure. Upload and TestFlight invitations require their own authorised step. See the [native test report](IOS-TEST-RESULTS.md) for the actual export result; an archive or IPA alone does not establish TestFlight availability.
 

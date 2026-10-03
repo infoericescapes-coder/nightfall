@@ -147,3 +147,24 @@ AFTER
 `cmp` returned **0**: the lists are byte-identical. No Nightfall disposable keychain directory, rsync shim or search-list lock remained after exit. Cleanup reread the current list and removed only its own keychain; the before list was used only for audit. [Full portable export evidence](ios-evidence/distribution-export.json) records signature output, resource comparison and artifact hashes. Private keys, profiles, the disposable keychain, archive, IPA and local signing logs remain outside Git.
 
 The remaining native acceptance checks above still apply. Distribution export is now verified locally; Apple cloud packaging failure remains historical/unresolved, and TestFlight upload, processing/review and invitation are separate future actions.
+
+
+## TestFlight upload and manifest repair — 3 October 2026, 11:11 AEST
+
+Eric authorised TestFlight upload after the export-only run. Apple rejected **1.1.0 (2)** with error **90849**: the Safari extension manifest description must be a string of 112 characters or fewer. The description was 115 characters. This was an upload validation failure, not a keychain failure; the rejected upload's disposable keychain cleanup and before/after list audit passed.
+
+The source description is now 110 characters. Packaging validates its type and length before writing generated resources or deleting an existing ZIP. Regression tests cover the actual manifest, the 112/113 boundary, missing/non-string values and preservation of existing files on rejection. Rebuilt `dist/Nightfall-Safari.zip`; all 20 resource files match between shared source, ZIP, copied native project, new archive and final IPA. Only manifest metadata changed in the extension; its engine, popup logic and layouts remain byte-identical. Native Safari UI scenarios were not repeated for this metadata repair; the earlier acceptance evidence and limitations still apply.
+
+Created a fresh **1.1.0 (3)** archive at ignored `native-ios/Nightfall-build3.xcarchive`, using Xcode 27 and the existing automatic Apple Development signing route. Both targets archived successfully. Intentionally repinned the export helper to that archive/build while retaining the hardened signing functions unchanged. The distribution export passed using a disposable keychain and export-scoped Apple rsync shim. Both final IPA bundles pass strict signature verification and show `Authority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)`.
+
+Before upload, API reads identified the existing **Nightfall — Smart Dark Mode** app record (`6818667711`) and confirmed no build 3 existed. Uploaded the verified IPA once with Xcode 27's `altool --upload-package`, API-key authentication and an explicit private-key file path. The temporary upload runner reuses the export helper's audited keychain functions and cleanup trap; it verifies metadata, signatures and the IPA hash before upload and the hash afterward. No credentials or generated keychain assets were copied into the repository.
+
+Apple returned **UPLOAD SUCCEEDED with no errors**, delivery UUID `be9d9dd6-ed8c-49df-9aea-63dc1e4a8126`. The IPA SHA-256 is `4bd11706f80079fd7cf6c9ce5e13ef08fa6537958b12023081e54ce22a867e62`. All rejected-upload, new-export and successful-upload cleanup audits passed. Each before/after user search list was exactly:
+
+```text
+    "/Users/eric/Library/Keychains/login.keychain-db"
+```
+
+No keychain prompt was observed and no fixed-path foundation keychain was read or modified. The unit suite passed **21 tests** and the browser suite passed **26 tests**. Independent review verified the packaging repair, final IPA/resources/signatures and unchanged signing helpers. [Machine-readable upload evidence](ios-evidence/testflight-upload.json) records transport acceptance separately from Apple processing.
+
+API readback confirms the delivery UUID is the fresh **1.1.0 (3)** build, with `uploadedDate` later than this upload run's start and `processingState=VALID`. The generated IPA lacked an encryption declaration, so TestFlight initially reported `MISSING_EXPORT_COMPLIANCE`. Source inspection found only browser networking/system frameworks and system randomness for Dark Reader identifiers, with no custom encryption. Recorded `usesNonExemptEncryption=false` through the API and verified it by a separate GET; this follows [Apple's encryption guidance](https://developer.apple.com/documentation/security/complying-with-encryption-export-regulations) for system encryption. TestFlight now reports **READY_FOR_BETA_TESTING** internally and **READY_FOR_BETA_SUBMISSION** externally. No tester invitations or App Store review submission were performed. No beta groups were configured at the pre-upload API check; adding testers and any external beta submission remain separate actions.

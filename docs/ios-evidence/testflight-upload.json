@@ -1,0 +1,115 @@
+{
+  "capturedAt": "2026-10-03T01:14:47.168712+00:00",
+  "appId": "6818667711",
+  "bundleId": "com.ericescapes.nightfall",
+  "version": "1.1.0",
+  "build": "3",
+  "previousAttempt": {
+    "build": "2",
+    "uploadExit": 1,
+    "errorCode": 90849,
+    "error": "Invalid manifest file. The manifest.json validation failed in the \u201cNightfall.app/PlugIns/Nightfall Extension.appex\u201d Safari web extension bundle. The description field must be present, of string type, and 112 or fewer characters long.",
+    "oldDescriptionLength": 115
+  },
+  "manifestDescription": "Darken bright surfaces, sidebars and controls. Keep photos natural. Remember your preference for each website.",
+  "manifestDescriptionLength": 110,
+  "preflightBuild3Count": 0,
+  "uploadRunStartedAt": "2026-10-03T01:10:00Z",
+  "uploadExit": 0,
+  "uploadResult": {
+    "details": {
+      "delivery-uuid": "be9d9dd6-ed8c-49df-9aea-63dc1e4a8126",
+      "transferred": "232152 bytes in 4.618 seconds (50.27KB/s, 0.402Mbps)"
+    },
+    "os-version": "Version 27.0 (Build 26A428)",
+    "success-message": "No errors uploading archive at '/Users/eric/Documents/nightfall/native-ios/export-build3/Nightfall.ipa'.",
+    "tool-path": "/Applications/Xcode-27.app/Contents/SharedFrameworks/ContentDelivery.framework/Resources",
+    "tool-version": "27.0.5 (2.1)"
+  },
+  "ipa": {
+    "path": "native-ios/export-build3/Nightfall.ipa",
+    "bytes": 232152,
+    "sha256": "4bd11706f80079fd7cf6c9ce5e13ef08fa6537958b12023081e54ce22a867e62"
+  },
+  "zipSha256": "8ceaace68c852a327831abd02dc1054085638771a8575059b0b0e203899f0b79",
+  "uploadRunnerSha256": "d0709b304e9a68a7c3d440cf27f3d0804a5bb58db817f04a035e6db4b7b2bb33",
+  "exportScriptSha256": "df1c6b7a7c6710eea9ea04758e1e007cdd34662ff5d8f47890933d4ef7f6f2fe",
+  "keychainSearchLists": {
+    "rejectedBuild2Upload": {
+      "before": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "after": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "byteIdentical": true
+    },
+    "build3Export": {
+      "before": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "after": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "byteIdentical": true
+    },
+    "build3Upload": {
+      "before": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "after": "    \"/Users/eric/Library/Keychains/login.keychain-db\"\n",
+      "byteIdentical": true
+    }
+  },
+  "signatureEvidence": [
+    {
+      "bundle": "native-ios/export-build3/signature-verification/Payload/Nightfall.app",
+      "displayExit": 0,
+      "strictVerifyExit": 0,
+      "signature": "Executable=/Users/eric/Documents/nightfall/native-ios/export-build3/signature-verification/Payload/Nightfall.app/Nightfall\nIdentifier=com.ericescapes.nightfall\nFormat=app bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=541 flags=0x0(none) hashes=6+7 location=embedded\nSignature size=4786\nAuthority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Oct 2026 at 11:09:23\u202fam\nInfo.plist entries=32\nTeamIdentifier=B3Z8GRN254\nSealed Resources version=2 rules=10 files=37\nInternal requirements count=1 size=192\nTotal signatures=1\nChosen signature=1\n"
+    },
+    {
+      "bundle": "native-ios/export-build3/signature-verification/Payload/Nightfall.app/PlugIns/Nightfall Extension.appex",
+      "displayExit": 0,
+      "strictVerifyExit": 0,
+      "signature": "Executable=/Users/eric/Documents/nightfall/native-ios/export-build3/signature-verification/Payload/Nightfall.app/PlugIns/Nightfall Extension.appex/Nightfall Extension\nIdentifier=com.ericescapes.nightfall.Extension\nFormat=bundle with Mach-O thin (arm64)\nCodeDirectory v=20400 size=935 flags=0x0(none) hashes=18+7 location=embedded\nSignature size=4786\nAuthority=Apple Distribution: Eric Kowalczyk (B3Z8GRN254)\nAuthority=Apple Worldwide Developer Relations Certification Authority\nAuthority=Apple Root CA\nSigned Time=3 Oct 2026 at 11:09:23\u202fam\nInfo.plist entries=23\nTeamIdentifier=B3Z8GRN254\nSealed Resources version=2 rules=10 files=21\nInternal requirements count=1 size=200\nTotal signatures=1\nChosen signature=1\n"
+    }
+  ],
+  "resourceFilesMatchingSourceZipNativeArchiveIPA": 20,
+  "unitTestsPassed": 21,
+  "browserTestsPassed": 26,
+  "testFlightProcessing": "VALID",
+  "invitesSent": false,
+  "appStoreReviewSubmitted": false,
+  "appStoreConnectReadback": {
+    "id": "be9d9dd6-ed8c-49df-9aea-63dc1e4a8126",
+    "attributes": {
+      "version": "3",
+      "uploadedDate": "2026-10-02T18:11:50-07:00",
+      "expirationDate": "2026-12-31T17:11:50-08:00",
+      "expired": false,
+      "minOsVersion": "17.0",
+      "lsMinimumSystemVersion": null,
+      "computedMinMacOsVersion": "14.0",
+      "computedMinVisionOsVersion": "1.0",
+      "iconAssetToken": {
+        "templateUrl": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/fe/67/7f/fe677ffa-cbe2-297d-5d6d-d79b749841e3/AppIcon76x76@2x_U007eipad.png/{w}x{h}bb.{f}",
+        "width": 152,
+        "height": 152
+      },
+      "processingState": "VALID",
+      "buildAudienceType": "APP_STORE_ELIGIBLE",
+      "usesNonExemptEncryption": false
+    },
+    "preReleaseVersion": {
+      "version": "1.1.0",
+      "platform": "IOS"
+    },
+    "beta": {
+      "autoNotifyEnabled": true,
+      "internalBuildState": "READY_FOR_BETA_TESTING",
+      "externalBuildState": "READY_FOR_BETA_SUBMISSION"
+    }
+  },
+  "exportCompliance": {
+    "usesNonExemptEncryption": false,
+    "updateHttpStatus": 200,
+    "basis": "Native system frameworks and browser networking; bundled Dark Reader uses system randomness for identifiers, with no custom encryption implementation.",
+    "source": "https://developer.apple.com/documentation/security/complying-with-encryption-export-regulations"
+  },
+  "temporaryResidue": {
+    "nightfall-release-kc.*": [],
+    "nightfall-rsync-shim.*": [],
+    "nightfall-keychain-search-list.lock": []
+  }
+}

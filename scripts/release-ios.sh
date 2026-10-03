@@ -10,7 +10,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 readonly DEVELOPER_DIR="/Applications/Xcode-27.app/Contents/Developer"
 export DEVELOPER_DIR
 NATIVE_IOS="$ROOT/native-ios"
-ARCHIVE="$NATIVE_IOS/Nightfall.xcarchive"
+ARCHIVE="$NATIVE_IOS/Nightfall-build3.xcarchive"
 EXPORT_PLIST="$NATIVE_IOS/ExportOptions.plist"
 KEY_DIR="$HOME/private_keys"
 DIST_DIR="$KEY_DIR/distribution"
@@ -26,7 +26,7 @@ EXPECTED_AUTHORITY="Apple Distribution: Eric Kowalczyk (B3Z8GRN254)"
 EXPECTED_IDENTITY_SHA1="7F10906FE961004F5693CDCD7D84C225F6B4017B"
 TEAM="B3Z8GRN254"
 VERSION="1.1.0"
-BUILD_NUM="2"
+BUILD_NUM="3"
 NF_KEYCHAIN_AUDIT_STARTED=0
 NF_KEYCHAINS_BEFORE=""
 NF_EXIT_STATUS=1
@@ -34,7 +34,7 @@ NF_EXIT_STATUS=1
 fail() { echo "ERROR: $1" >&2; exit 1; }
 usage() {
     echo "usage: scripts/release-ios.sh [EXPORT_DIRECTORY]" >&2
-    echo "Export 1.1.0 (2) into a NEW ignored directory under native-ios." >&2
+    echo "Export 1.1.0 (3) into a NEW ignored directory under native-ios." >&2
     echo "Default: native-ios/export-<timestamp>; existing paths are refused." >&2
 }
 if [[ $# -eq 1 && ( "$1" == "--help" || "$1" == "-h" ) ]]; then

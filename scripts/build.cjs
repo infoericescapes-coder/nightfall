@@ -1,8 +1,11 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {execFileSync} = require('node:child_process');
+const {validateManifest} = require('./validate-manifest.cjs');
 const root = path.resolve(__dirname, '..');
 const ext = path.join(root, 'extension');
+const manifest = JSON.parse(fs.readFileSync(path.join(ext,'manifest.json'), 'utf8'));
+validateManifest(manifest);
 fs.mkdirSync(path.join(ext, 'vendor'), {recursive:true});
 // Dark Reader's exclusion skips the entire background-image declaration, including
 // CSS gradients. Limit it to URL images so photography stays intact while gradients
@@ -39,7 +42,6 @@ for(const [font,weight] of [['space-grotesk',500],['ibm-plex-mono',400]]) {
   fs.copyFileSync(path.join(root,`node_modules/@fontsource/${font}/files/${name}`),path.join(ext,'fonts',name));
   fs.copyFileSync(path.join(root,`node_modules/@fontsource/${font}/LICENSE`),path.join(ext,'fonts',`${font}-LICENSE`));
 }
-const manifest = JSON.parse(fs.readFileSync(path.join(ext,'manifest.json')));
 for(const script of manifest.content_scripts.flatMap(x=>x.js)) if(!fs.existsSync(path.join(ext,script))) throw new Error(`Missing ${script}`);
 fs.mkdirSync(path.join(root,'dist'),{recursive:true});
 const output=path.join(root,'dist','Nightfall-Safari.zip');
