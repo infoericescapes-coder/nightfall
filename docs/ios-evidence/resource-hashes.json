@@ -1,0 +1,342 @@
+{
+  "capturedAt": "2026-10-02T23:58:39.346844+00:00",
+  "source": "extension",
+  "sourceFileCount": 20,
+  "destinations": {
+    "generatedResources": "native-ios/verified/Nightfall/Nightfall Extension/Resources",
+    "simulatorExtension": "DerivedData/Build/Products/Debug-iphonesimulator/Nightfall Extension.appex",
+    "simulatorEmbeddedExtension": "DerivedData/Build/Products/Debug-iphonesimulator/Nightfall.app/PlugIns/Nightfall Extension.appex",
+    "signedDeviceExtension": "native-ios/DerivedData-device/Build/Products/Debug-iphoneos/Nightfall Extension.appex",
+    "signedDeviceEmbeddedExtension": "native-ios/DerivedData-device/Build/Products/Debug-iphoneos/Nightfall.app/PlugIns/Nightfall Extension.appex"
+  },
+  "zip": {
+    "path": "dist/Nightfall-Safari.zip",
+    "sha256": "d1d0c7d25dbb6ec38b8eb2a22ff98b3a9f2a9495c894e47394f7a64bc34b52a8",
+    "bytes": 119673,
+    "fileEntryCount": 20,
+    "missingEntries": [],
+    "extraFileEntries": [],
+    "duplicateFileEntries": []
+  },
+  "comparisonMethod": "Direct byte equality for every source file, plus SHA-256. Matching destinations share the recorded per-file source digest.",
+  "summary": {
+    "generatedResources": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    },
+    "simulatorExtension": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    },
+    "simulatorEmbeddedExtension": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    },
+    "signedDeviceExtension": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    },
+    "signedDeviceEmbeddedExtension": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    },
+    "zipEntry": {
+      "matched": 20,
+      "compared": 20,
+      "result": "PASS"
+    }
+  },
+  "signatureVerification": {
+    "signedDeviceExtension": {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "native-ios/DerivedData-device/Build/Products/Debug-iphoneos/Nightfall Extension.appex"
+      ],
+      "exitCode": 0,
+      "result": "PASS"
+    },
+    "signedDeviceEmbeddedExtension": {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "native-ios/DerivedData-device/Build/Products/Debug-iphoneos/Nightfall.app/PlugIns/Nightfall Extension.appex"
+      ],
+      "exitCode": 0,
+      "result": "PASS"
+    }
+  },
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1071,
+      "sha256": "2509c988257d7b7e02a25f7481f8a3ade4cf57201ac7d55e0825fb7c3a1b86a8",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "content.js",
+      "bytes": 5235,
+      "sha256": "d6c5afc7e3e9d6f024e4125b5a8557a86bf12ce6f342a3b105d0f6f97ffb42d2",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "fonts/ibm-plex-mono-LICENSE",
+      "bytes": 5299,
+      "sha256": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "fonts/ibm-plex-mono-latin-400-normal.woff2",
+      "bytes": 14708,
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "fonts/space-grotesk-LICENSE",
+      "bytes": 4401,
+      "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "fonts/space-grotesk-latin-500-normal.woff2",
+      "bytes": 13312,
+      "sha256": "1b1a8131d9edf975d9decee81e2f2bf504812f7a4f498e5500f28a613e22e64c",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/128.png",
+      "bytes": 1178,
+      "sha256": "8f5c392183b23039a1e27e83de40b268c381cd676f702d9d6b2ccc2e07bd28a2",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/16.png",
+      "bytes": 180,
+      "sha256": "56a0ce3182097b63c086171ea3105c3ea2db44bf60a1763328e712603af1965a",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/256.png",
+      "bytes": 2910,
+      "sha256": "e41585278e73447a3060fe162ebea9aee8773935c6196d8cb9b5c5b3fd4b7b5b",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/32.png",
+      "bytes": 299,
+      "sha256": "776cf57659324af3cfb56f35da6ce5664f7c19726997f9aebb9a1588f846cdfd",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/48.png",
+      "bytes": 440,
+      "sha256": "b6a4fad8bbba3608e1fd17ca198d68377831901a3098077a5095b8e74704cb98",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "icons/512.png",
+      "bytes": 6497,
+      "sha256": "9064adab76d977fef37ec8c153c02976a453b3805f2ddb33478066d86596e664",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1051,
+      "sha256": "7e4a4860635e7d2f45733054053c58e38509885af72866b1d7676eba554e9f9e",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "popup.css",
+      "bytes": 6368,
+      "sha256": "14075320a33b1057ecf604d0588d44f6d5476b38da6b771995b157cf9b2b75f3",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "popup.html",
+      "bytes": 1798,
+      "sha256": "2199fd108c8a04cb37393837126b0f6f4a232471060759cdcfb9bfae8b26d21a",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "popup.js",
+      "bytes": 4675,
+      "sha256": "cb421700ea0af50d49e372735e38679aceeae5780eb1cefdac189feaea4caab5",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "settings.js",
+      "bytes": 2176,
+      "sha256": "d8584a63af86d7e8a738423f5f78b8d319420a54b312f55b38e81d963612ed92",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "vendor/DARKREADER-LICENSE",
+      "bytes": 1095,
+      "sha256": "f0a5f835174494f8981b2cbb1a34054d4f887a5c865318650d6a17afe1c7850e",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "vendor/NIGHTFALL-PATCH.txt",
+      "bytes": 1253,
+      "sha256": "0e921b3f898776f20643a1ddb1bde8d546b6198a0d4fd574d77c51a8180b1753",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    },
+    {
+      "path": "vendor/darkreader.js",
+      "bytes": 346352,
+      "sha256": "965938e2bf288822f6a6c7c017c666d01dca7e0525f2266c6988c2cd2812ea6c",
+      "byteIdentical": {
+        "generatedResources": true,
+        "simulatorExtension": true,
+        "simulatorEmbeddedExtension": true,
+        "signedDeviceExtension": true,
+        "signedDeviceEmbeddedExtension": true,
+        "zipEntry": true
+      }
+    }
+  ],
+  "limitations": [
+    "Compares the 20 extension payload files only; native binaries and signing metadata are outside this resource comparison.",
+    "A valid device signature and identical payload do not establish a successful physical-device Safari test."
+  ]
+}

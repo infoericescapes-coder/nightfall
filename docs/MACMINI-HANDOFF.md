@@ -1,5 +1,9 @@
 # MacminiM4: native iOS testing handoff
 
+## Follow-up
+
+Native testing on 3 October 2026 is recorded in [IOS-TEST-RESULTS.md](IOS-TEST-RESULTS.md), including the packaging repair, simulator evidence, signed physical iPhone run and remaining checks. The starting point below is the historical handoff baseline.
+
 ## Starting point
 
 - Repository: https://github.com/infoericescapes-coder/nightfall.git

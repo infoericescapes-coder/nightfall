@@ -4,5 +4,6 @@ playwright-report/
 .DS_Store
 native-ios/
 DerivedData/
+DerivedData-*/
 *.xcuserstate
 xcuserdata/

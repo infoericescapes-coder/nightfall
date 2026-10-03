@@ -3,7 +3,8 @@ set -euo pipefail
 project_root="$(cd "$(dirname "$0")/.." && pwd)"
 project_output="${1:-$project_root/native-ios}"
 if [[ "$project_output" != /* ]]; then project_output="$PWD/$project_output"; fi
-bundle_identifier="${NIGHTFALL_BUNDLE_ID:-com.ericescapes.nightfall}"
+bundle_identifier="${NIGHTFALL_BUNDLE_ID-com.ericescapes.nightfall}"
+node "$project_root/scripts/normalize-ios-identifiers.cjs" --validate "$bundle_identifier"
 if [ -e "$project_output" ]; then
   printf '%s\n' "Output already exists: $project_output" 'Choose a new output folder to preserve the existing project.' >&2
   exit 1
@@ -18,4 +19,5 @@ xcrun safari-web-extension-packager "$project_root/extension" \
   --ios-only --swift --copy-resources --no-open --no-prompt \
   --app-name Nightfall --bundle-identifier "$bundle_identifier" \
   --project-location "$project_output"
+node "$project_root/scripts/normalize-ios-identifiers.cjs" "$project_output" "$bundle_identifier"
 printf '\n%s\n' "Generated an unsigned iOS Xcode project at: $project_output" 'Open it in Xcode, select your signing team and iPhone/iPad target, then build and test.'

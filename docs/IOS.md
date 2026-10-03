@@ -10,13 +10,13 @@ Nightfall 1.1.0 prepares the shared Safari extension for iPhone and iPad. The da
 - Popup messages time out instead of leaving the controls disabled indefinitely when Safari cannot respond. Saved preferences remain available when the page resumes.
 - `dist/Nightfall-Safari.zip` contains the shared resources for Apple's Safari Web Extension Packager.
 
-**This ZIP is not an IPA or an installable iPhone app.** The source and emulated browser checks do not prove execution inside iOS 27 Safari. Native packaging, signing and device testing are separate steps.
+**This ZIP is not an IPA or an installable iPhone app.** The source and emulated browser checks do not prove execution inside iOS 27 Safari. Native packaging, signing and device testing are separate steps. The [3 October 2026 native test report](IOS-TEST-RESULTS.md) records successful iPhone/iPad simulator checks, a signed physical iPhone run and the remaining gaps.
 
 ## Recommended: Apple's web packager and TestFlight
 
 An Apple Developer Program membership and access to App Store Connect are required. The web packager avoids installing Xcode on the development Mac.
 
-1. In App Store Connect, create a new app record with **iOS** selected. Use **Nightfall** as the app name if available. Register or choose a unique bundle identifier; `com.ericescapes.nightfall` is the proposed identifier used by the local helper, not a confirmed registration. Pick a SKU and primary language appropriate to your account.
+1. In App Store Connect, create a new app record with **iOS** selected. Use **Nightfall** as the app name if available. Register or choose a unique bundle identifier; `com.ericescapes.nightfall` and its `.Extension` identifier were registered for Eric’s account during this test session; the existing app record is **Nightfall — Smart Dark Mode**. Other accounts must use their own identifiers. Pick a SKU and primary language appropriate to your account.
 2. Open the app's **Xcode Cloud** tab, find **Safari Web Extension Packager**, and upload `dist/Nightfall-Safari.zip`.
 3. Wait for Apple's packaging result. Resolve any compatibility or signing diagnostics; a successful ZIP validation alone is not an iOS build.
 4. Once Apple processes a successful build, use the **TestFlight** tab to make it available to the appropriate testers. Complete any required compliance questions using the actual app behaviour and your account's details. External testing may require Apple's review.
@@ -36,7 +36,7 @@ npm ci
 npm run package:ios
 ```
 
-The script invokes Apple's official packager to generate an iOS-only Swift container at `native-ios/`. It copies the current extension resources into that project, refuses to overwrite an existing directory, and does not sign or launch the app. Choose a different output directory when generating again:
+The script invokes Apple's official packager to generate an iOS-only Swift container at `native-ios/`. It copies the current extension resources into that project, refuses to overwrite an existing directory, and does not sign or launch the app. It also validates the requested identifier and normalises the generated app/extension target identifiers: the Xcode 27 packager produced inconsistent capitalisation that otherwise failed embedded-extension validation. Unexpected project structures fail without a partial rewrite. Choose a different output directory when generating again:
 
 ```sh
 bash scripts/package-ios.sh ./native-ios-next
@@ -47,6 +47,8 @@ To use an already registered bundle identifier:
 ```sh
 NIGHTFALL_BUNDLE_ID=com.example.nightfall npm run package:ios
 ```
+
+On the tested Mac mini, select Xcode 27 for each command with `DEVELOPER_DIR=/Applications/Xcode-27.app/Contents/Developer`; the machine-wide default remains Xcode 26.6. The local generated wrapper reports version 1.0 (1), while its copied extension manifest is 1.1.0. Set intentional wrapper versions before local distribution; Apple’s cloud packager reads the uploaded manifest and queued 1.1.0 (1).
 
 Open the generated project in Xcode. Select your signing team for the app and extension targets, confirm the generated bundle identifiers and AppIcon assets, select a connected iPhone/iPad or simulator, then build and run. Test the extension in Safari as well as the containing app's welcome screen.
 

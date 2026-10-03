@@ -1,0 +1,134 @@
+// !$*UTF8*$!
+// Reduced Xcode 27 packager fixture: original target references and settings layout.
+{
+	objects = {
+/* Begin PBXNativeTarget section */
+		073AA4EC307072EA000D09C7 /* Nightfall */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 073AA519307072EB000D09C7 /* Build configuration list for PBXNativeTarget "Nightfall" */;
+			buildPhases = (
+				073AA4E9307072EA000D09C7 /* Sources */,
+				073AA4EA307072EA000D09C7 /* Frameworks */,
+				073AA4EB307072EA000D09C7 /* Resources */,
+				073AA518307072EB000D09C7 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				073AA50D307072EB000D09C7 /* PBXTargetDependency */,
+			);
+			name = Nightfall;
+			productName = Nightfall;
+			productReference = 073AA4ED307072EA000D09C7 /* Nightfall.app */;
+			productType = "com.apple.product-type.application";
+		};
+		073AA509307072EB000D09C7 /* Nightfall Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 073AA515307072EB000D09C7 /* Build configuration list for PBXNativeTarget "Nightfall Extension" */;
+			buildPhases = (
+				073AA506307072EB000D09C7 /* Sources */,
+				073AA507307072EB000D09C7 /* Frameworks */,
+				073AA508307072EB000D09C7 /* Resources */,
+			);
+			buildRules = (
+			);
+			name = "Nightfall Extension";
+			productName = "Nightfall Extension";
+			productReference = 073AA50A307072EB000D09C7 /* Nightfall Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin XCBuildConfiguration section */
+		073AA513307072EB000D09C7 /* Debug configuration for PBXProject "Nightfall" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		073AA514307072EB000D09C7 /* Release configuration for PBXProject "Nightfall" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		073AA516307072EB000D09C7 /* Debug configuration for PBXNativeTarget "Nightfall Extension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericescapes.nightfall.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+			};
+			name = Debug;
+		};
+		073AA517307072EB000D09C7 /* Release configuration for PBXNativeTarget "Nightfall Extension" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericescapes.nightfall.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+			};
+			name = Release;
+		};
+		073AA51A307072EB000D09C7 /* Debug configuration for PBXNativeTarget "Nightfall" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericescapes.Nightfall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+			};
+			name = Debug;
+		};
+		073AA51B307072EB000D09C7 /* Release configuration for PBXNativeTarget "Nightfall" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_BUNDLE_IDENTIFIER = com.ericescapes.Nightfall;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		073AA4E8307072EA000D09C7 /* Build configuration list for PBXProject "Nightfall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				073AA513307072EB000D09C7 /* Debug configuration for PBXProject "Nightfall" */,
+				073AA514307072EB000D09C7 /* Release configuration for PBXProject "Nightfall" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		073AA515307072EB000D09C7 /* Build configuration list for PBXNativeTarget "Nightfall Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				073AA516307072EB000D09C7 /* Debug configuration for PBXNativeTarget "Nightfall Extension" */,
+				073AA517307072EB000D09C7 /* Release configuration for PBXNativeTarget "Nightfall Extension" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		073AA519307072EB000D09C7 /* Build configuration list for PBXNativeTarget "Nightfall" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				073AA51A307072EB000D09C7 /* Debug configuration for PBXNativeTarget "Nightfall" */,
+				073AA51B307072EB000D09C7 /* Release configuration for PBXNativeTarget "Nightfall" */,
+			);
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+}

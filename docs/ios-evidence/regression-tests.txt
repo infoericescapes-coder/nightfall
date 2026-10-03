@@ -1,0 +1,65 @@
+
+> nightfall-safari@1.1.0 test
+> node --test tests/*.test.cjs && playwright test
+
+✔ settings sanitize storage, parse hostnames, and enforce precedence (1.96675ms)
+✔ engine uses neutral dynamic theme, permits gradient processing, and updates stored controls (1.843334ms)
+✔ cross-origin frames use top ancestor host without elevated permissions (0.461333ms)
+✔ storage failures keep engine disabled even after a scheme change (0.433333ms)
+✔ a storage change takes precedence over an older pending initial read (0.377334ms)
+✔ explicit refresh rebuilds the enabled engine even when its theme is unchanged (1.103458ms)
+✔ failed explicit refresh disables safely without re-enabling stale settings (0.391458ms)
+✔ a superseded explicit refresh does not rebuild after a newer storage update (0.37675ms)
+✔ document_start waits for the parser root before enabling or explicitly refreshing (0.57775ms)
+✔ disabled saved preferences never transiently enable when the root appears (0.411167ms)
+✔ storage changes received before the root are applied once it appears (0.329916ms)
+✔ resumed Safari pages reconcile preferences missed during suspension (0.354125ms)
+✔ normalizes the Xcode 27 app casing mismatch in both configurations, preserving other content (2.309208ms)
+✔ honors custom identifiers including case and hyphens and quoted generated values (0.344125ms)
+✔ rejects invalid requested identifiers before file access, including project syntax (0.285209ms)
+✔ packaging script rejects an explicitly empty identifier before packager or build steps (52.95125ms)
+✔ fails closed on unexpected targets, references, configurations, and identifier overrides (0.509625ms)
+✔ CLI uses generated output layout, writes only identifiers, and leaves rejected projects untouched (165.411125ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 285.656833
+
+Running 26 tests using 1 worker
+
+(node:11310) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium] › tests/browser.spec.cjs:36:1 › bundled engine darkens pale surfaces, dynamic DOM and shadow DOM; disabling restores originals (685ms)
+  ✓   2 [chromium] › tests/browser.spec.cjs:58:1 › CSS gradients remain readable without pale glare (131ms)
+  ✓   3 [chromium] › tests/browser.spec.cjs:65:1 › large pale raster backgrounds retain pixels while mixed gradients and relative URLs are converted (335ms)
+  ✓   4 [chromium] › tests/browser.spec.cjs:90:1 › document-start injection and explicit refresh recover same-count CSSOM changes under script CSP (104ms)
+  ✓   5 [chromium] › tests/browser.spec.cjs:105:1 › system preference, deeper setting and hostname overrides update live rendering (283ms)
+  ✓   6 [chromium] › tests/browser.spec.cjs:119:30 › popup keeps intrinsic width from 160px and persists preferences (429ms)
+  ✓   7 [chromium] › tests/browser.spec.cjs:119:30 › popup keeps intrinsic width from 360px and persists preferences (354ms)
+  ✓   8 [chromium] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 320px, exposes touch controls and saves a toggle (232ms)
+  ✓   9 [chromium] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 390px, exposes touch controls and saves a toggle (330ms)
+  ✓  10 [chromium] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 844px, exposes touch controls and saves a toggle (275ms)
+  ✓  11 [chromium] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 768px, exposes touch controls and saves a toggle (340ms)
+  ✓  12 [chromium] › tests/browser.spec.cjs:165:1 › simulated iOS popup maintains a 320px intrinsic minimum from an initial 160px viewport (130ms)
+  ✓  13 [chromium] › tests/browser.spec.cjs:172:1 › simulated iOS popup bounds an unresponsive page request and saves preferences within one timeout (6.8s)
+(node:11393) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [webkit] › tests/browser.spec.cjs:36:1 › bundled engine darkens pale surfaces, dynamic DOM and shadow DOM; disabling restores originals (1.0s)
+  ✓  15 [webkit] › tests/browser.spec.cjs:58:1 › CSS gradients remain readable without pale glare (336ms)
+  ✓  16 [webkit] › tests/browser.spec.cjs:65:1 › large pale raster backgrounds retain pixels while mixed gradients and relative URLs are converted (410ms)
+  ✓  17 [webkit] › tests/browser.spec.cjs:90:1 › document-start injection and explicit refresh recover same-count CSSOM changes under script CSP (296ms)
+  ✓  18 [webkit] › tests/browser.spec.cjs:105:1 › system preference, deeper setting and hostname overrides update live rendering (315ms)
+  ✓  19 [webkit] › tests/browser.spec.cjs:119:30 › popup keeps intrinsic width from 160px and persists preferences (390ms)
+  ✓  20 [webkit] › tests/browser.spec.cjs:119:30 › popup keeps intrinsic width from 360px and persists preferences (433ms)
+  ✓  21 [webkit] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 320px, exposes touch controls and saves a toggle (310ms)
+  ✓  22 [webkit] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 390px, exposes touch controls and saves a toggle (323ms)
+  ✓  23 [webkit] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 844px, exposes touch controls and saves a toggle (425ms)
+  ✓  24 [webkit] › tests/browser.spec.cjs:148:3 › simulated iOS popup fits 768px, exposes touch controls and saves a toggle (348ms)
+  ✓  25 [webkit] › tests/browser.spec.cjs:165:1 › simulated iOS popup maintains a 320px intrinsic minimum from an initial 160px viewport (277ms)
+  ✓  26 [webkit] › tests/browser.spec.cjs:172:1 › simulated iOS popup bounds an unresponsive page request and saves preferences within one timeout (7.0s)
+
+  26 passed (29.8s)

@@ -21,7 +21,7 @@ Download the updated `dist/Nightfall-Safari.zip`, replacing the ZIP at the locat
 
 ## iPhone and iPad
 
-Version 1.1.0 adds mobile layouts and suspended-tab recovery. The same ZIP can be uploaded to Apple’s Safari Web Extension Packager to create an iOS container for TestFlight. It is not directly installable on iPhone or iPad. See [iOS 27 packaging and testing](docs/IOS.md) for the cloud route and the local `npm run package:ios` helper. Native iOS 27 execution remains to be verified with a signed build.
+Version 1.1.0 adds mobile layouts and suspended-tab recovery. The same ZIP can be uploaded to Apple’s Safari Web Extension Packager to create an iOS container for TestFlight. It is not directly installable on iPhone or iPad. See [iOS 27 packaging and testing](docs/IOS.md) for the cloud route and the local `npm run package:ios` helper. Native Safari execution has now been verified on iOS/iPadOS 27 simulators and a signed iPhone build; see the [test results and remaining acceptance checks](docs/IOS-TEST-RESULTS.md).
 
 Continuing on the Mac mini with Xcode: use the [MacminiM4 testing handoff](docs/MACMINI-HANDOFF.md) for the current baseline, setup commands and native acceptance checks.
 
